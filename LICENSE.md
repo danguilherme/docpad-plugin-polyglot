@@ -4,7 +4,7 @@
 
 Unless stated otherwise all works are:
 
-<ul><li>Copyright &copy; <a href="copyright holder's website url">Copyright holders name</a></li></ul>
+<ul><li>Copyright &copy; <a href="http://danguilherme.github.io/">Guilherme Ventura</a></li></ul>
 
 and licensed under:
 

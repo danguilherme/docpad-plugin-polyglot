@@ -5,16 +5,6 @@ https://github.com/bevry/base
 
 # Before You Post!
 
-## Support
-
-We offer support through our [Official Support Channels](https://bevry.me/support). Do not use GitHub Issues for support, your issue will be closed.
-
-
-## Contribute
-
-Our [Contributing Guide](https://learn.bevry.me/community/contribute) contains useful tips and suggestions for how to contribute to this project, it's worth the read.
-
-
 ## Development
 
 ### Setup
