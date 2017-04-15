@@ -56,6 +56,12 @@ module.exports = (BasePlugin) ->
 					if lang != @document.lang
 						other[lang] = @getNewUrl url
 				return other
+
+			# Allow to obtain current language from URL if @document.lang isn't available
+			# Using @document.lang is prefered for performance
+			langFromUrl: (url) ->
+				match = @getCollection('documents').findAll({ url: url })
+				return match.models[0].get('lang') if match.size() > 0
 		extendTemplateData: (opts) ->
 			{ templateData } = opts
 			config = @config
