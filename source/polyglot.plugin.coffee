@@ -103,6 +103,7 @@ module.exports = (BasePlugin) ->
 		generateBefore: (opts) ->
 			docsCollection = @docpad.getCollection('html').findAll()
 			allDocs = docsCollection.toJSON()
+			config = @config
 
 			translationsMap = {}
 			for d in allDocs
@@ -113,7 +114,7 @@ module.exports = (BasePlugin) ->
 
 			# add user-specified translations
 			for d in allDocs
-				for l in @config.languages
+				for l in config.languages
 					if (d.multilanguage? and d.multilanguage[l]?) and (d.lang? and d.lang != l)
 						documentUrl = @docUrl d
 						translationUrl = '/' + l + '/' + d.multilanguage[l]
@@ -138,7 +139,7 @@ module.exports = (BasePlugin) ->
 			# separate loop from above to allow specification in meta-data to be
 			# reflexive
 			for d in allDocs
-				for l in @config.languages
+				for l in config.languages
 					if d.lang!=l and d.lang? and l?
 						documentUrl = @docUrl d
 						translationUrl = '/' + l + '/' + (@noLanguagePath d.lang, documentUrl)
@@ -154,6 +155,10 @@ module.exports = (BasePlugin) ->
 				d.set("origUrl", d.get("url")) unless d.get('origUrl') # store in case the URL gets rewritten
 				if d.get("url") of translationsMap
 					d.set("translationURLs", translationsMap[d.get("url")])
+					lang = d.get("lang")
+					prefix = "#{lang}/"
+					prefix = '' if config.omitMainFolder && lang is config.mainLanguage
+					d.set("langPrefix", prefix)
 				else if not d.has("lang")
 					d.set("lang","")
 
