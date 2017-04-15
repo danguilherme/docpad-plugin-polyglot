@@ -2,7 +2,7 @@
 
 Add multilanguage support for your site.
 
-Implemented inspired on [multilang](https://www.npmjs.com/package/docpad-plugin-multilang) and the abandoned [multilanguage](https://www.npmjs.com/package/docpad-plugin-multilanguage) plugins.
+Heavily inspired and mostly based on [multilang](https://www.npmjs.com/package/docpad-plugin-multilang) and <del>the abandoned</del> [multilanguage](https://www.npmjs.com/package/docpad-plugin-multilanguage) plugins.
 
 
 <!-- INSTALL/ -->
