@@ -122,9 +122,9 @@ module.exports = (BasePlugin) ->
 			# add user-specified translations
 			for d in allDocs
 				for l in config.languages
-					if (d.multilanguage? and d.multilanguage[l]?) and (d.lang? and d.lang != l)
+					if (d.translations? and d.translations[l]?) and (d.lang? and d.lang != l)
 						documentUrl = @docUrl d
-						translationUrl = '/' + l + '/' + d.multilanguage[l]
+						translationUrl = '/' + l + '/' + d.translations[l]
 						if translationUrl not of translationsMap
 							@log 'debug', translationsMap
 							@error "#{documentUrl} specifies a non-existing translation #{translationUrl}"
