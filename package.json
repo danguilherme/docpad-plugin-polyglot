@@ -1,6 +1,6 @@
 {
   "name": "docpad-plugin-polyglot",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "DocPad plugin for multilingual websites",
   "homepage": "https://github.com/danguilherme/docpad-plugin-polyglot",
   "license": "MIT",
@@ -16,7 +16,11 @@
     "Guilherme Ventura <guilhermeventura2@gmail.com> (http://danguilherme.github.io/)"
   ],
   "contributors": [
-    "Guilherme Ventura <guilhermeventura2@gmail.com> (http://danguilherme.github.io/)"
+    "Guilherme Ventura <guilhermeventura2@gmail.com> (http://danguilherme.github.io/)",
+    "Benjamin Lupton (http://balupton.com)",
+    "Michael Duane Mooring <Mike@mdm.cc> (http://mdm.cc)",
+    "Rob Loach <robloach@gmail.com> (http://robloach.net)",
+    "vsopvsop (https://github.com/vsopvsop)"
   ],
   "bugs": {
     "url": "https://github.com/danguilherme/docpad-plugin-polyglot/issues"
@@ -78,9 +82,9 @@
     "our:release": "npm run our:release:prepare && npm run our:release:check && npm run our:release:tag && npm run our:release:push",
     "our:release:prepare": "npm run our:clean && npm run our:compile && npm run our:test && npm run our:meta",
     "our:release:check": "npm run our:release:check:changelog && npm run our:release:check:dirty",
-    "our:release:check:changelog": "cat ./HISTORY.md | grep v$npm_package_version || (echo add a changelog entry for v$npm_package_version && exit -1)",
+    "our:release:check:changelog": "cat ./HISTORY.md | grep v%npm_package_version% || (echo add a changelog entry for v%npm_package_version% && exit -1)",
     "our:release:check:dirty": "git diff --exit-code",
-    "our:release:tag": "export MESSAGE=$(cat ./HISTORY.md | sed -n \"/## v$npm_package_version/,/##/p\" | sed 's/## //' | awk 'NR>1{print buf}{buf = $0}') && test \"$MESSAGE\" || (echo 'proper changelog entry not found' && exit -1) && git tag v$npm_package_version -am \"$MESSAGE\"",
+    "our:release:tag": "git tag v%npm_package_version% -am \"Initial plugin version\"",
     "our:release:push": "git push origin master && git push origin --tags",
     "test": "node --harmony es5/polyglot.test.js --joe-reporter=console",
     "develop": "npm run our:compile:coffee:watch"
