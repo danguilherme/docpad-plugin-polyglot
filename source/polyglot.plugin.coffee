@@ -8,10 +8,6 @@ module.exports = (BasePlugin) ->
 			languages: null
 			mainLanguage: null
 			omitMainFolder: true
-		error: (message) ->
-			@docpad.error "Polyglot: #{JSON.stringify(message)}"
-		log: (type, message) ->
-			@docpad.log type, "Polyglot: #{JSON.stringify(message, null, 2)}"
 
 
 		# Injected to site's templateData on `extendTemplateData` event
@@ -27,7 +23,7 @@ module.exports = (BasePlugin) ->
 
 				moment = require 'moment'
 				moment.locale(lang)
-				return moment(date).format(format);
+				return moment(date).format(format)
 
 			# Returns a translation URL for the specified language,
 			# if it has one
@@ -50,7 +46,7 @@ module.exports = (BasePlugin) ->
 				@document.translationURLs? and @document.translationURLs[lang]?
 
 			# other languages for this page
-			otherLangs: () ->
+			otherLangs: ->
 				other = {}
 				for lang, url of @document.translationURLs
 					if lang != @document.lang
@@ -69,11 +65,12 @@ module.exports = (BasePlugin) ->
 			@log 'debug', config
 
 			templateData = Object.assign(templateData, @templateData)
-			templateData.languages = config.languages;
-			templateData.mainLanguage = config.mainLanguage;
+			templateData.languages = config.languages
+			templateData.mainLanguage = config.mainLanguage
 
-			if not config.mainLanguage or (not config.languages or not config.languages.length)
-				@error "Configs 'mainLanguage' and 'languages' are mandatory"
+			if not @checkRequiredConfigs()
+				@error @requiredConfigMissingError()
+				return @
 
 			@
 
@@ -83,6 +80,10 @@ module.exports = (BasePlugin) ->
 			docpad = @docpad
 			languages = config.languages
 			database = @docpad.getDatabase()
+
+			if not @checkRequiredConfigs()
+				@error @requiredConfigMissingError()
+				return @
 
 			for lang in languages
 				do (lang, docpad) ->
@@ -168,7 +169,7 @@ module.exports = (BasePlugin) ->
 				else if not d.has("lang")
 					d.set("lang","")
 
-			@log 'debug', translationsMap;
+			@log 'debug', translationsMap
 
 			@
 
@@ -183,3 +184,14 @@ module.exports = (BasePlugin) ->
 
 		docUrl: (document) ->
 			document.origUrl || document.url
+
+		error: (msg) ->
+			msg = msg.message if msg instanceof Error
+			@docpad.error "Polyglot: #{JSON.stringify(msg)}"
+		log: (type, message) ->
+			@docpad.log type, "Polyglot: #{JSON.stringify(message, null, 2)}"
+		requiredConfigMissingError: ->
+			new Error("Configs 'mainLanguage' and 'languages' are mandatory")
+		checkRequiredConfigs: ->
+			config = @getConfig()
+			config.mainLanguage and (config.languages and config.languages.length)
